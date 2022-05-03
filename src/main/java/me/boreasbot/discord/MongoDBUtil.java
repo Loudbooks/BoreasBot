@@ -5,11 +5,6 @@ import com.google.gson.JsonParser;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import org.bson.Document;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
-
-import java.util.UUID;
 
 import static me.boreasbot.discord.Main.mongoCollection;
 
@@ -30,7 +25,7 @@ public final class MongoDBUtil {
         document.append(s, s1);
         mongoCollection.insertOne(document);
     }
-    public static void updateData(String fieldName, Player p, String areatochange, Object change){
-        mongoCollection.updateOne(Filters.eq(fieldName, p.getUniqueId().toString()), Updates.set(areatochange, change));
+    public static void updateData(String fieldName, String id, String areatochange, Object change){
+        mongoCollection.updateOne(Filters.eq(fieldName, id), Updates.set(areatochange, change));
     }
 }

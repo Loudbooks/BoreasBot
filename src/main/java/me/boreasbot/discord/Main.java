@@ -24,7 +24,6 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
@@ -37,18 +36,13 @@ import org.bson.Document;
 
 import javax.security.auth.login.LoginException;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.Proxy;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Properties;
-import java.util.logging.Logger;
+import java.util.*;
 
 import static me.boreasbot.discord.Passwords.PASSWORD;
 import static me.boreasbot.discord.Passwords.USERNAME;
-import static net.dv8tion.jda.api.interactions.commands.OptionType.STRING;
-import static net.dv8tion.jda.api.interactions.commands.OptionType.USER;
+import static net.dv8tion.jda.api.interactions.commands.OptionType.*;
 
 public class Main {
     private static final String HOST = "hypixel.net";
@@ -71,11 +65,10 @@ public class Main {
         MongoDatabase mongoDatabase = mongoClient.getDatabase("BoreasBot");
         mongoCollection = mongoDatabase.getCollection("userdata");
         System.out.println("Connected to Database");
-        boolean sendMessage = true;
         try {
             jda = JDABuilder.createDefault(prop.getProperty("discord_token"))
-                    .setChunkingFilter(ChunkingFilter.ALL)
                     .enableIntents(GatewayIntent.GUILD_MEMBERS)
+                    .setChunkingFilter(ChunkingFilter.ALL)
                     .setMemberCachePolicy(MemberCachePolicy.ALL)
                     .addEventListeners(new DiscordChat())
                     .addEventListeners(new SlashCommandInteraction())
@@ -95,30 +88,28 @@ public class Main {
         commands.addCommands(
                 Commands.slash("verify", "Link your Discord to your IGN.")
                         .addOptions(new OptionData(STRING, "username", "Hypixel username.").setRequired(true)));
-/*        commands.addCommands(
+        commands.addCommands(
                 Commands.slash("verifiedlist", "Get all the verified users.")
         );
         commands.addCommands(
                 Commands.slash("unverifiedlist", "Get all the unverified user.")
-        );*/
+                        .addOptions(new OptionData(INTEGER, "page", "Page of unverified users, 3 pages total.").setRequired(true))
+        );
         commands.addCommands(
                 Commands.slash("fetch", "Fetch a person's data.")
-                        .addOptions(new OptionData(STRING, "username", "Hypixel username to get.").setRequired(true)));
+                        .addOptions(new OptionData(USER, "username", "Discord username").setRequired(true)));
+        commands.addCommands(
+                Commands.slash("execute", "Execute a command in-game")
+                        .addOptions(new OptionData(STRING, "command", "Command to execute, use / at the start.").setRequired(true)));
         commands.queue();
-/*        guild.upsertCommand(Commands.slash("verify", "Link your Discord to your IGN.")
-                .addOptions(new OptionData(STRING, "username", "Hypixel username.").setRequired(true))).queue();*/
         guild.updateCommands();
         login();
-
-/*        client.addListener(new SessionAdapter() {
-            @Override
-            public void packetyReveived(Session session, Packet packet){
-
-            }
-        });*/
     }
 
     static void login() throws RequestException, InterruptedException, IOException {
+        TextChannel textChannel = jda.getGuildById("860667007632277524").getTextChannelById("872232416771735592");
+        textChannel.sendMessage("**Boreas Bot is starting...**").queue();
+        Thread.sleep(10000);
         String configFilePath = "src/main/resources/config.properties";
         FileInputStream propsInput = new FileInputStream(configFilePath);
         Properties prop = new Properties();
@@ -129,21 +120,16 @@ public class Main {
         authService.setPassword(PASSWORD);
         authService.setProxy(AUTH_PROXY);
         authService.login();
-
         MinecraftProtocol protocol;
         protocol = new MinecraftProtocol(authService.getSelectedProfile(), authService.getAccessToken());
         SessionService sessionService = new SessionService();
         sessionService.setProxy(AUTH_PROXY);
-        TextChannel textChannel = jda.getGuildById("860667007632277524").getTextChannelById("872232416771735592");
-        textChannel.sendMessage("**Boreas Bot is starting...**").queue();
-
         Session client = new TcpClientSession(HOST, PORT, protocol, PROXY);
         client.setFlag(MinecraftConstants.SESSION_SERVICE_KEY, sessionService);
         client.connect();
         for (int i = 0; i < 16; i++) {
             client.send(new ServerboundChatPacket("/"));
         }
-        Component msg = Component.text("/");
         client.addListener(new SessionAdapter() {
             @Override
             public void packetReceived(Session session, Packet packet) {
@@ -176,16 +162,6 @@ public class Main {
                         if (str1 == null) {
                             return;
                         }
-                        //.substring(23);
-                        int subString;
-     /*                   String author1 = jsonObject.getAsJsonArray("extra").get(0).getAsJsonObject().get("text").getAsString();
-                        if (author1.contains("VIP")){
-                            subString = 20;
-                        } else if (author1.contains("§6MVP")){
-                            subString = 25;
-                        } else {
-                            subString = 23;
-                        }*/
                         String author = null;
                         String authorSub = null;
                         try {
@@ -375,8 +351,8 @@ public class Main {
         hashMap.clear();
 
         Thread.sleep(3000);
-        textChannel.sendMessage("**Boreas Bot has started!**\n*Bot written by Loudbook for Boreas.*").queue();
-        client.send(new ServerboundChatPacket("Boreas bot is online! This bot was coded by Loudbook for Boreas. Please contact them if you have any questions."));
+        //textChannel.sendMessage("**Boreas Bot has started!**\n*Bot written by Loudbook for Boreas.*").queue();
+        //client.send(new ServerboundChatPacket("Boreas bot is online! This bot was coded by Loudbook for Boreas. Please contact them if you have any questions."));
         ready = true;
         for (;;){
             Thread.sleep(5);
@@ -384,9 +360,7 @@ public class Main {
                 String message = hashMap.get(0);
                 client.send(new ServerboundChatPacket(message));
                 hashMap.clear();
-            } catch (Exception ex){
-
-            }
+            } catch (Exception ex){}
 
         }
     }
