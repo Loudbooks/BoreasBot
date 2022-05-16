@@ -156,7 +156,7 @@ public class Main extends ListenerAdapter {
         for (int i = 0; i < 16; i++) {
             client.send(new ServerboundChatPacket("/"));
         }
-        textChannel.sendMessage("**Boreas Bot has started!**\n\n__Thanks to Djeff#0001 for sponsoring!__\n\n*Bot written by Loudbook for Boreas.*").queue();
+        textChannel.sendMessage("__**Boreas Bot has started!**__\n\n__Monthly Sponsors:__ Djeff#0001\n\n__Donators:__ Dax1e#4765\n**Thanks for all your support!**").queue();
         ready = true;
         client.addListener(new SessionAdapter() {
             @Override
@@ -241,7 +241,7 @@ public class Main extends ListenerAdapter {
                                         if (authorSub.contains("Guild >")) {
                                             String authorMessage = strNew.replaceFirst("\\[[^\\]]+\\]", "").trim();
                                             eb.setDescription(str);
-                                            if (authorMessage.equals("ItsMeDjeff") || authorMessage.equals("Loudbook")){
+                                            if (authorMessage.equals("ItsMeDjeff") || authorMessage.equals("Loudbook") || authorMessage.equals("Dax1e")){
                                                 eb.setColor(0xE69D3E);
                                             } else {
                                                 eb.setColor(0x6ac0dc);
@@ -379,7 +379,9 @@ public class Main extends ListenerAdapter {
                                     eb.setColor(0x00FF00);
                                     eb.setFooter(dateString2);
                                     if (authorMessage.equals("ItsMeDjeff")) {
-                                        client.send(new ServerboundChatPacket("Everyone welcome ItsMeDjeff! They are one of our generous sponsors."));
+                                        client.send(new ServerboundChatPacket("/gc Everyone welcome ItsMeDjeff! They are one of our generous sponsors."));
+                                    } else if (authorMessage.equals("Dax1e")){
+                                        client.send(new ServerboundChatPacket("/gc Everyone welcome Dax1e! They are one of our generous donators."));
                                     }
                                     textChannel.sendMessageEmbeds(eb.build()).queue();
                                 }
