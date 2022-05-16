@@ -165,6 +165,19 @@ public class Main {
                     assert textChannel != null;
                     String gson = GsonComponentSerializer.gson().serialize(message);
                     JsonObject jsonObject = (JsonObject) new JsonParser().parse(gson);
+                    if (jsonObject.get("text").getAsString().equals("You cannot say the same message twice!")) {
+                        TextChannel failedMessageChannel = guild.getTextChannelById(messages.get(0));
+                        failedMessageChannel.retrieveMessageById(messagesID.get(0)).queue((messageFail) -> messageFail.addReaction("❌").queue());
+                        messagesID.remove(0);
+                        messages.remove(0);
+
+                    } else {
+                        try{
+                            messagesID.remove(0); messages.remove(0);
+                        } catch (IndexOutOfBoundsException ex){
+                            indexCount++;
+                        }
+                    }
                     try {
                         String str = null;
                         String str1 = null;
