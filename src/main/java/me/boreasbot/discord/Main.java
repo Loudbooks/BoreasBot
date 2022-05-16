@@ -106,10 +106,25 @@ public class Main {
                         .addOptions(new OptionData(STRING, "command", "Command to execute, use / at the start.").setRequired(true)));
         commands.queue();
         guild.updateCommands();
+        for(Command c : guild.retrieveCommands().complete()){
+            System.out.println(c);
+        }
+        VoiceChannel channel = guild.getVoiceChannelById("921425697870843924");
+        channel.getManager().setName("Bot Status: Online").queue();
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            VoiceChannel channel1 = guild.getVoiceChannelById("921425697870843924");
+            channel1.getManager().setName("Bot Status: Offline").queue();
+            System.out.println("Index fail count: " + indexCount);
+        }));
+        Thread.sleep(3000);
         login();
+
+
     }
 
     static void login() throws RequestException, InterruptedException, IOException {
+        Guild guild = jda.getGuildById("860667007632277524");
+        jda.getPresence().setPresence(OnlineStatus.IDLE, true);
         TextChannel textChannel = jda.getGuildById("860667007632277524").getTextChannelById("872232416771735592");
         textChannel.sendMessage("**Boreas Bot is starting...**").queue();
         Thread.sleep(10000);
@@ -133,6 +148,8 @@ public class Main {
         for (int i = 0; i < 16; i++) {
             client.send(new ServerboundChatPacket("/"));
         }
+        textChannel.sendMessage("**Boreas Bot has started!**\n\n__Thanks to Djeff#0001 for sponsoring!__\n\n*Bot written by Loudbook for Boreas.*").queue();
+        ready = true;
         client.addListener(new SessionAdapter() {
             @Override
             public void packetReceived(Session session, Packet packet) {
