@@ -86,6 +86,8 @@ public class Main {
 
         CommandListUpdateAction commands = guild.updateCommands();
         commands.addCommands(
+                Commands.slash("verifiedlist", "Get all the verified users."));
+        commands.addCommands(
                 Commands.slash("verify", "Link your Discord to your IGN.")
                         .addOptions(new OptionData(STRING, "username", "Hypixel username.").setRequired(true)));
         commands.addCommands(
@@ -95,6 +97,7 @@ public class Main {
                 Commands.slash("unverifiedlist", "Get all the unverified user.")
                         .addOptions(new OptionData(INTEGER, "page", "Page of unverified users, 3 pages total.").setRequired(true))
         );
+                        .addOptions(new OptionData(INTEGER, "page", "Page of unverified users, 3 pages total.").setRequired(true)));
         commands.addCommands(
                 Commands.slash("fetch", "Fetch a person's data.")
                         .addOptions(new OptionData(USER, "username", "Discord username").setRequired(true)));
