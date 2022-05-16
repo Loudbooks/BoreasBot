@@ -407,6 +407,11 @@ public class Main {
                 hashMap.clear();
             } catch (Exception ex){}
 
+            if (!(message.chars().count() > 255)){
+                client.send(new ServerboundChatPacket("/go " + author + ": " + message));
+            } else {
+                e.getMessage().reply("Message is too long, canceling send.").queue();
+            }
         }
     }
 }
