@@ -7,11 +7,6 @@
       <option name="url" value="https://repo.maven.apache.org/maven2" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="dv8tion" />
-      <option name="name" value="m2-dv8tion" />
-      <option name="url" value="https://m2.dv8tion.net/releases" />
-    </remote-repository>
-    <remote-repository>
       <option name="id" value="papermc" />
       <option name="name" value="papermc" />
       <option name="url" value="https://papermc.io/repo/repository/maven-public/" />
@@ -22,9 +17,9 @@
       <option name="url" value="https://jitpack.io" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="sonatype-oss-snapshots1" />
-      <option name="name" value="sonatype-oss-snapshots1" />
-      <option name="url" value="https://s01.oss.sonatype.org/content/repositories/snapshots/" />
+      <option name="id" value="maven_central" />
+      <option name="name" value="Maven Central" />
+      <option name="url" value="https://repo.maven.apache.org/maven2/" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="opencollab" />
@@ -37,6 +32,36 @@
       <option name="url" value="https://repo1.maven.org/maven2" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="repo" />
+      <option name="url" value="https://maven.enginehub.org:443/artifactory/repo" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="snapshots" />
+      <option name="name" value="libs-snapshot" />
+      <option name="url" value="https://maven.enginehub.org:443/artifactory/libs-snapshot" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="dv8tion" />
+      <option name="name" value="m2-dv8tion" />
+      <option name="url" value="https://m2.dv8tion.net/releases" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="spigot-repo" />
+      <option name="name" value="spigot-repo" />
+      <option name="url" value="https://hub.spigotmc.org/nexus/content/repositories/snapshots/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="sonatype-oss-snapshots1" />
+      <option name="name" value="sonatype-oss-snapshots1" />
+      <option name="url" value="https://s01.oss.sonatype.org/content/repositories/snapshots/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="bintray" />
+      <option name="url" value="http://jcenter.bintray.com" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="jboss.community" />
       <option name="name" value="JBoss Community repository" />
       <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
@@ -45,6 +70,11 @@
       <option name="id" value="opencollab" />
       <option name="name" value="opencollab" />
       <option name="url" value="https://repo.opencollab.dev/maven-releases/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="Hypixel" />
+      <option name="name" value="Hypixel" />
+      <option name="url" value="https://repo.hypixel.net/repository/Hypixel/" />
     </remote-repository>
   </component>
 </project>

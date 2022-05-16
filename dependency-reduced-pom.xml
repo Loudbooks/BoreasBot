@@ -53,8 +53,33 @@
       <id>jitpack.io</id>
       <url>https://jitpack.io</url>
     </repository>
+    <repository>
+      <id>Hypixel</id>
+      <url>https://repo.hypixel.net/repository/Hypixel/</url>
+    </repository>
+    <repository>
+      <id>spigot-repo</id>
+      <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+    </repository>
+    <repository>
+      <id>maven_central</id>
+      <name>Maven Central</name>
+      <url>https://repo.maven.apache.org/maven2/</url>
+    </repository>
+    <repository>
+      <id>central</id>
+      <name>bintray</name>
+      <url>http://jcenter.bintray.com</url>
+    </repository>
   </repositories>
   <dependencies>
+    <dependency>
+      <groupId>com.jagrosh</groupId>
+      <artifactId>jda-utilities</artifactId>
+      <version>3.0.5</version>
+      <type>pom</type>
+      <scope>compile</scope>
+    </dependency>
     <dependency>
       <groupId>io.papermc.paper</groupId>
       <artifactId>paper-api</artifactId>
@@ -76,10 +101,6 @@
         <exclusion>
           <artifactId>snakeyaml</artifactId>
           <groupId>org.yaml</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>json-simple</artifactId>
-          <groupId>com.googlecode.json-simple</groupId>
         </exclusion>
         <exclusion>
           <artifactId>fastutil</artifactId>
@@ -112,6 +133,30 @@
         <exclusion>
           <artifactId>asm-commons</artifactId>
           <groupId>org.ow2.asm</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.spigotmc</groupId>
+      <artifactId>spigot-api</artifactId>
+      <version>1.18.2-R0.1-SNAPSHOT</version>
+      <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>commons-lang</artifactId>
+          <groupId>commons-lang</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>guava</artifactId>
+          <groupId>com.google.guava</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>bungeecord-chat</artifactId>
+          <groupId>net.md-5</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>snakeyaml</artifactId>
+          <groupId>org.yaml</groupId>
         </exclusion>
       </exclusions>
     </dependency>
