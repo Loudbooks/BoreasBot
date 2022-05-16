@@ -227,17 +227,24 @@ public class Main {
                                 .replace("§e", "")
 
                                 .replace("§f", "").trim();
+
                         if (ready) {
+                            DateFormat dateFormat2 = new SimpleDateFormat("MM/dd/yyyy hh.mm aa");
+                            String dateString2 = dateFormat2.format(new Date());
                             if (!strNew.contains("BoreasBot")) {
                                 if (!str1.contains("joined.")) {
                                     if (!str1.contains("left.")) {
                                         if (authorSub.contains("Guild >")) {
-                                            eb.setDescription(str);
-                                            eb.setColor(0x6ac0dc);
                                             String authorMessage = strNew.replaceFirst("\\[[^\\]]+\\]", "").trim();
-                                            eb.setAuthor(strNew + " [Click]", "https://namemc.com/profile/" + authorMessage, "https://minotar.net/helm/" + authorMessage);
+                                            eb.setDescription(str);
+                                            if (authorMessage.equals("ItsMeDjeff") || authorMessage.equals("Loudbook")){
+                                                eb.setColor(0xE69D3E);
+                                            } else {
+                                                eb.setColor(0x6ac0dc);
+                                            }
+                                            eb.setFooter(dateString2);
+                                            eb.setAuthor(strNew + " [Click]", "https://sky.shiiyu.moe/stats/" + authorMessage, "https://minotar.net/helm/" + authorMessage);
                                             textChannel.sendMessageEmbeds(eb.build()).queue();
-                                        } else if (authorSub.contains("+")){
                                             String subject = jsonObject.getAsJsonArray("extra").get(1).getAsJsonObject().get("text").getAsString().replace("]", "").trim();
                                             String predicate = jsonObject.getAsJsonArray("extra").get(2).getAsJsonObject().get("text").getAsString();
                                             if (predicate.contains("was kicked")){
