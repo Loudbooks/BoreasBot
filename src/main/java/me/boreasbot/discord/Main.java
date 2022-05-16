@@ -353,14 +353,19 @@ public class Main {
                                     }else if (str1.contentEquals("left.")) {
                                         String authorMessage = jsonObject.getAsJsonArray("extra").get(0).getAsJsonObject().get("text").getAsString();
                                         eb.setAuthor(authorMessage + "left.", "https://namemc.com/profile/" + authorMessage, "https://minotar.net/helm/" + authorMessage);
+                                        eb.setAuthor(authorMessage + "left.", "https://sky.shiiyu.moe/stats/" + authorMessage, "https://minotar.net/helm/" + authorMessage);
                                         eb.setColor(0xFF0000);
+                                        eb.setFooter(dateString2);
                                         textChannel.sendMessageEmbeds(eb.build()).queue();
                                     }
                                     } else {
                                     String authorMessage = jsonObject.getAsJsonArray("extra").get(0).getAsJsonObject().get("text").getAsString();
-                                    eb.setAuthor(authorMessage + "joined.", "https://namemc.com/profile/" + authorMessage, "https://minotar.net/helm/" + authorMessage);
+                                    eb.setAuthor(authorMessage + "joined.", "https://sky.shiiyu.moe/stats/" + authorMessage, "https://minotar.net/helm/" + authorMessage);
                                     eb.setColor(0x00FF00);
-
+                                    eb.setFooter(dateString2);
+                                    if (authorMessage.equals("ItsMeDjeff")) {
+                                        client.send(new ServerboundChatPacket("Everyone welcome ItsMeDjeff! They are one of our generous sponsors."));
+                                    }
                                     textChannel.sendMessageEmbeds(eb.build()).queue();
                                 }
                             }
