@@ -23,7 +23,11 @@ public class DiscordChat extends ListenerAdapter {
             JsonObject jsonObject = MongoDBUtil.readData("_id", member.getId());
             String author = e.getAuthor().getName();
             if (jsonObject.get("donator") != null || jsonObject.get("role") != null){
-                author = member.getNickname();
+                if (member.getNickname() != null){
+                    author = member.getNickname();
+                } else {
+                    author = e.getAuthor().getName();
+                }
             }
             String message = e.getMessage().getContentDisplay();
             if (!(message.chars().count() > 255)){

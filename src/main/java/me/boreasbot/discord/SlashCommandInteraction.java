@@ -71,7 +71,10 @@ public class SlashCommandInteraction extends ListenerAdapter {
                                 eb.setFooter("Make sure that you re-run this command if you change your Hypixel username.");
                                 eb.setColor(0x6ac0dc);
                                 Objects.requireNonNull(e.getGuild()).addRoleToMember(e.getUser().getId(), Objects.requireNonNull(e.getGuild().getRoleById("970859257983557693"))).queue();
+                                Objects.requireNonNull(e.getGuild()).addRoleToMember(e.getUser().getId(), Objects.requireNonNull(e.getGuild().getRoleById("877188839255453766"))).queue();
+
                                 e.getHook().sendMessageEmbeds(eb.build()).queue();
+                                guild.addRoleToMember(e.getUser().getId() ,guild.getRoleById("920329177406799872")).queue();
                                 if (verifying){
                                     if (e.getTextChannel().getName().equals(e.getName() + "-application")){
                                         List<TextChannel> textList = guild.getTextChannelsByName(e.getName() + "-application", true);
@@ -127,7 +130,9 @@ public class SlashCommandInteraction extends ListenerAdapter {
                                 eb.setFooter("Make sure that you re-run this command if you change your Hypixel username.");
                                 eb.setColor(0x6ac0dc);
                                 Objects.requireNonNull(e.getGuild()).addRoleToMember(e.getUser().getId(), Objects.requireNonNull(e.getGuild().getRoleById("970859257983557693"))).queue();
+                                Objects.requireNonNull(e.getGuild()).addRoleToMember(e.getUser().getId(), Objects.requireNonNull(e.getGuild().getRoleById("877188839255453766"))).queue();
                                 e.getHook().sendMessageEmbeds(eb.build()).queue();
+                                guild.addRoleToMember(e.getUser().getId() ,guild.getRoleById("920329177406799872")).queue();
                                 if (verifying){
                                     if (e.getTextChannel().getName().equals(e.getName() + "-application")){
                                         List<TextChannel> textList = guild.getTextChannelsByName(e.getName() + "-application", true);

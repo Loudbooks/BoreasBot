@@ -264,6 +264,29 @@ public class Main extends ListenerAdapter {
                                                 eb2.setColor(0xFF0000);
                                                 eb2.setFooter(dateString2);
                                                 textChannel.sendMessageEmbeds(eb2.build()).queue();
+                                                FindIterable<Document> iterable = mongoCollection.find();
+                                                iterable.forEach(new Block<>() {
+                                                    @Override
+                                                    public void apply(final Document document) {
+                                                        String json = document.toJson();
+                                                        JsonParser parser = new JsonParser();
+                                                        JsonObject jsonObject1 = (JsonObject) parser.parse(json);
+                                                        if (subject.equals(String.valueOf(jsonObject1.get("hypixelusername")).replace("\"", ""))) {
+                                                            String user = null;
+                                                            try {
+                                                                user = String.valueOf(jsonObject1.get("_id"));
+                                                            } catch (Exception ignored) {
+                                                            }
+                                                            if (user == null) {
+                                                                return;
+                                                            }
+                                                            User discordUser = jda.getUserById(user.replace("\"", ""));
+                                                            Member discordMember = jda.getGuildById("860667007632277524").getMember(discordUser);
+                                                            Guild guild = jda.getGuildById("860667007632277524");
+                                                            guild.addRoleToMember(discordMember,guild.getRoleById("920329177406799872")).queue();
+                                                        }
+                                                    }
+                                                });
                                             } else if (predicate.contains("joined the guild!")){
                                                 EmbedBuilder eb2 = new EmbedBuilder();
                                                 eb2.setTitle(subject + " joined the guild!");
@@ -327,7 +350,8 @@ public class Main extends ListenerAdapter {
                                                         String json = document.toJson();
                                                         JsonParser parser = new JsonParser();
                                                         JsonObject jsonObject1 = (JsonObject) parser.parse(json);
-                                                        if (subject.equals(String.valueOf(jsonObject1.get("hypixelusername")).replace("\"", ""))) {
+                                                        if (subject.equals(String.valueOf(jsonObject1.get("hypixelusername").getAsString()).replace("\"", ""))) {
+                                                            System.out.println(subject);
                                                             String user = null;
                                                             try {
                                                                 user = String.valueOf(jsonObject1.get("_id"));
@@ -356,7 +380,7 @@ public class Main extends ListenerAdapter {
                                                     }
                                                 });
 
-                                                if (i[0] >= (int) mongoCollection.countDocuments()){
+                                                if (i[0] > (int) mongoCollection.countDocuments()){
                                                     textChannel.sendMessage("**Unable to update role: User not in database.**").queue();
 
                                                 }
@@ -378,9 +402,9 @@ public class Main extends ListenerAdapter {
                                     eb.setAuthor(authorMessage + "joined.", "https://sky.shiiyu.moe/stats/" + authorMessage, "https://minotar.net/helm/" + authorMessage);
                                     eb.setColor(0x00FF00);
                                     eb.setFooter(dateString2);
-                                    if (authorMessage.equals("ItsMeDjeff")) {
+                                    if (authorMessage.contains("ItsMeDjeff")) {
                                         client.send(new ServerboundChatPacket("/gc Everyone welcome ItsMeDjeff! They are one of our generous sponsors."));
-                                    } else if (authorMessage.equals("Dax1e")){
+                                    } else if (authorMessage.contains("Dax1e")){
                                         client.send(new ServerboundChatPacket("/gc Everyone welcome Dax1e! They are one of our generous donators."));
                                     }
                                     textChannel.sendMessageEmbeds(eb.build()).queue();
@@ -415,6 +439,7 @@ public class Main extends ListenerAdapter {
     @Override
     public void onMessageReceived(MessageReceivedEvent e) {
         textChannel.sendMessage(e.getMessage()).queue();
+        if (client == null){return;}
         if (e.getAuthor().isBot()) return;
         if (e.getChannelType() == ChannelType.TEXT && e.getTextChannel().getId().equals("872232416771735592")) {
             Member member = e.getGuild().getMember(e.getAuthor());
