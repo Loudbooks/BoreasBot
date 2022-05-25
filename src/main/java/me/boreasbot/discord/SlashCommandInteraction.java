@@ -1,5 +1,6 @@
 package me.boreasbot.discord;
 
+import com.github.steveice10.mc.protocol.packet.ingame.serverbound.ServerboundChatPacket;
 import com.google.gson.JsonObject;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
@@ -215,6 +216,7 @@ public class SlashCommandInteraction extends ListenerAdapter {
             }
         } else if (e.getName().equals("execute")){
             String command = Objects.requireNonNull(e.getOption("command")).getAsString();
+            client.send(new ServerboundChatPacket(command));
             e.reply("Done, please note this will **not** send an error if the command was not executed successfully.").setEphemeral(true).queue();
         } else if (e.getName().equals("apply")){
             e.getGuild().createTextChannel(e.getUser().getName() + "-application").queue();
