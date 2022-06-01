@@ -1,2 +1,2 @@
 # BoreasBot
-The Discord bot for Boreas.
+A Discord ⇆ Minecraft chat bridge for the Hypixel guild, Boreas.
